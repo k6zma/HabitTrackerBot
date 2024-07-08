@@ -37,7 +37,7 @@ func Start() {
 
 	for update := range updates {
 		if update.Message != nil {
-			// TODO: add message handling
+			HandlingMessage(bot, update.Message)
 		}
 	}
 }
