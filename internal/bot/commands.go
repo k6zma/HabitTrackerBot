@@ -130,7 +130,7 @@ func listHabitsCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	}
 
 	if len(user.Habits) == 0 {
-		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "У вас нет добавленных привычек.")
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
 		msg.ReplyToMessageID = inputMessage.MessageID
 
 		bot.Send(msg)
