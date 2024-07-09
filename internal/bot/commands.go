@@ -243,6 +243,39 @@ func unmarkHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	bot.Send(msg)
 }
 
+func statsCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
+	if habit.Users == nil {
+		habit.Users = make(map[int64]*habit.User)
+	}
+
+	user, exists := habit.Users[inputMessage.Chat.ID]
+	if !exists {
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
+		msg.ReplyToMessageID = inputMessage.MessageID
+
+		bot.Send(msg)
+		return
+	}
+
+	if len(user.Habits) == 0 {
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
+		msg.ReplyToMessageID = inputMessage.MessageID
+
+		bot.Send(msg)
+		return
+	}
+
+	stats := "Статистика выполнения привычек:\n"
+	for _, habit := range user.Habits {
+		stats += fmt.Sprintf("- %s: %d выполнений\n", habit.Name, habit.Count)
+	}
+
+	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, stats)
+	msg.ReplyToMessageID = inputMessage.MessageID
+
+	bot.Send(msg)
+}
+
 func defaultCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	msg := tgbotapi.NewMessage(
 		inputMessage.Chat.ID,
