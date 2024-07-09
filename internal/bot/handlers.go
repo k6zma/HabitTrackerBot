@@ -10,6 +10,8 @@ func HandlingMessage(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		startCommand(bot, inputMessage)
 	case "help":
 		helpCommand(bot, inputMessage)
+	case "add_habit":
+		addHabitCommand(bot, inputMessage)
 	default:
 		defaultCommand(bot, inputMessage)
 	}

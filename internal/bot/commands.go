@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	habit "github.com/k6zma/HabitTrackerBot/internal/model"
 )
 
 func startCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
@@ -28,6 +29,41 @@ func helpCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		"- /stats - Показать статистику выполнения всех привычек (количество выполнений).\n\n"+
 		"Используйте эти команды, чтобы отслеживать и управлять своими привычками. Начните с добавления первой привычки с помощью команды /add_habit <название>!",
 	)
+	msg.ReplyToMessageID = inputMessage.MessageID
+
+	bot.Send(msg)
+}
+
+func addHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
+	habitName := inputMessage.CommandArguments()
+	if habitName == "" {
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Пожалуйста, укажите название привычки.")
+		msg.ReplyToMessageID = inputMessage.MessageID
+
+		bot.Send(msg)
+		return
+	}
+
+	if habit.Users == nil {
+		habit.Users = make(map[int64]*habit.User)
+	}
+
+	user, exists := habit.Users[inputMessage.Chat.ID]
+	if !exists {
+		user = &habit.User{Habits: make(map[string]*habit.Habit)}
+		habit.Users[inputMessage.Chat.ID] = user
+	}
+
+	if _, exists := user.Habits[habitName]; exists {
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Эта привычка уже добавлена.")
+		msg.ReplyToMessageID = inputMessage.MessageID
+
+		bot.Send(msg)
+		return
+	}
+
+	user.Habits[habitName] = &habit.Habit{Name: habitName}
+	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Привычка добавлена: %v", habitName))
 	msg.ReplyToMessageID = inputMessage.MessageID
 
 	bot.Send(msg)
