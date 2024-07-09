@@ -14,6 +14,8 @@ func HandlingMessage(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		addHabitCommand(bot, inputMessage)
 	case "delete_habit":
 		deleteHabitCommand(bot, inputMessage)
+	case "list_habits":
+		listHabitsCommand(bot, inputMessage)
 	default:
 		defaultCommand(bot, inputMessage)
 	}

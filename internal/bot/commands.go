@@ -115,6 +115,39 @@ func deleteHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	bot.Send(msg)
 }
 
+func listHabitsCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
+	if habit.Users == nil {
+		habit.Users = make(map[int64]*habit.User)
+	}
+
+	user, exists := habit.Users[inputMessage.Chat.ID]
+	if !exists {
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
+		msg.ReplyToMessageID = inputMessage.MessageID
+
+		bot.Send(msg)
+		return
+	}
+
+	if len(user.Habits) == 0 {
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "У вас нет добавленных привычек.")
+		msg.ReplyToMessageID = inputMessage.MessageID
+
+		bot.Send(msg)
+		return
+	}
+
+	habitsList := "Список ваших привычек:\n"
+	for _, habit := range user.Habits {
+		habitsList += fmt.Sprintf("- %s\n", habit.Name)
+	}
+
+	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, habitsList)
+	msg.ReplyToMessageID = inputMessage.MessageID
+
+	bot.Send(msg)
+}
+
 func defaultCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	msg := tgbotapi.NewMessage(
 		inputMessage.Chat.ID,
