@@ -31,9 +31,23 @@ func PanicWithColor(msg interface{}) {
 }
 
 func SuccessfulExecution(msg string) {
-	fmt.Printf("%sSuccessful execution function:%s %s%s%s\n", yellowColor, resetColor, greenColor, msg, resetColor)
+	fmt.Printf(
+		"%sSuccessful execution function:%s %s%s%s\n",
+		yellowColor,
+		resetColor,
+		greenColor,
+		msg,
+		resetColor,
+	)
 }
 
 func SuccessfulAuthorizing(bot *tgbotapi.BotAPI) {
-	fmt.Printf("%sAuthorized on bot account:%s %s%s%s\n", cyanColor, resetColor, boldBlue, bot.Self.UserName, resetColor)
+	fmt.Printf(
+		"%sAuthorized on bot account:%s %s%s%s\n",
+		cyanColor,
+		resetColor,
+		boldBlue,
+		bot.Self.UserName,
+		resetColor,
+	)
 }
