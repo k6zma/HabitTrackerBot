@@ -63,7 +63,7 @@ func addHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	}
 
 	user.Habits[habitName] = &habit.Habit{Name: habitName}
-	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Привычка добавлена: %v", habitName))
+	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Привычка: %v добавлена.", habitName))
 	msg.ReplyToMessageID = inputMessage.MessageID
 
 	bot.Send(msg)
@@ -101,7 +101,7 @@ func deleteHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	}
 
 	delete(user.Habits, habitName)
-	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Привычка удалена: %v", habitName))
+	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Привычка: %v - удалена.", habitName))
 	msg.ReplyToMessageID = inputMessage.MessageID
 
 	bot.Send(msg)
