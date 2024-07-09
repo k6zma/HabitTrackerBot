@@ -10,6 +10,8 @@ func HandlingMessage(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	switch inputMessage.Command() {
 	case "start":
 		startCommand(bot, inputMessage)
+	case "help":
+		helpCommand(bot, inputMessage)
 	default:
 		fmt.Println("LOL")
 	}
