@@ -1,6 +1,10 @@
 package bot
 
-import tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+import (
+	"fmt"
+
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+)
 
 func startCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Привет! Я бот для отслеживания привычек. "+
@@ -24,6 +28,13 @@ func helpCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		"- /stats - Показать статистику выполнения всех привычек (количество выполнений).\n\n"+
 		"Используйте эти команды, чтобы отслеживать и управлять своими привычками. Начните с добавления первой привычки с помощью команды /add_habit <название>!",
 	)
+	msg.ReplyToMessageID = inputMessage.MessageID
+
+	bot.Send(msg)
+}
+
+func defaultCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
+	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Введена неправильная команда: %v", inputMessage.Text))
 	msg.ReplyToMessageID = inputMessage.MessageID
 
 	bot.Send(msg)

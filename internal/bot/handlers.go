@@ -1,8 +1,6 @@
 package bot
 
 import (
-	"fmt"
-
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -13,6 +11,6 @@ func HandlingMessage(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	case "help":
 		helpCommand(bot, inputMessage)
 	default:
-		fmt.Println("LOL")
+		defaultCommand(bot, inputMessage)
 	}
 }
