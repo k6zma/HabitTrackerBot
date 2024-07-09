@@ -18,6 +18,8 @@ func HandlingMessage(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		listHabitsCommand(bot, inputMessage)
 	case "mark_habit":
 		markHabbitCommand(bot, inputMessage)
+	case "unmark_habit":
+		unmarkHabitCommand(bot, inputMessage)
 	default:
 		defaultCommand(bot, inputMessage)
 	}
