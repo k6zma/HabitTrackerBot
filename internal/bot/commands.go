@@ -82,7 +82,7 @@ func deleteHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {
-		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добвыили ни одной привычки.")
+		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
 		msg.ReplyToMessageID = inputMessage.MessageID
 
 		bot.Send(msg)
