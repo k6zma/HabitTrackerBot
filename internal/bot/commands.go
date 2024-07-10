@@ -108,7 +108,6 @@ func deleteHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 }
 
 func listHabitsCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
-
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {
 		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
@@ -175,7 +174,10 @@ func markHabbitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	user.Habits[habitName].Completed = true
 	user.Habits[habitName].Count += 1
 
-	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Теперь привычка: %v помечена как выполненная", habitName))
+	msg := tgbotapi.NewMessage(
+		inputMessage.Chat.ID,
+		fmt.Sprintf("Теперь привычка: %v помечена как выполненная", habitName),
+	)
 	msg.ReplyToMessageID = inputMessage.MessageID
 
 	bot.Send(msg)
@@ -209,7 +211,10 @@ func unmarkHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 	}
 
 	if !user.Habits[habitName].Completed {
-		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Эта привычка не помечена, как выполненная.")
+		msg := tgbotapi.NewMessage(
+			inputMessage.Chat.ID,
+			"Эта привычка не помечена, как выполненная.",
+		)
 		msg.ReplyToMessageID = inputMessage.MessageID
 
 		bot.Send(msg)
@@ -218,14 +223,16 @@ func unmarkHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 
 	user.Habits[habitName].Completed = false
 
-	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, fmt.Sprintf("Теперь привычка: %v не помечена как выполненная", habitName))
+	msg := tgbotapi.NewMessage(
+		inputMessage.Chat.ID,
+		fmt.Sprintf("Теперь привычка: %v не помечена как выполненная", habitName),
+	)
 	msg.ReplyToMessageID = inputMessage.MessageID
 
 	bot.Send(msg)
 }
 
 func statsCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
-
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {
 		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
