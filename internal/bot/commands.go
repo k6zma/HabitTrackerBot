@@ -46,10 +46,6 @@ func addHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		return
 	}
 
-	if habit.Users == nil {
-		habit.Users = make(map[int64]*habit.User)
-	}
-
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {
 		user = &habit.User{Habits: make(map[string]*habit.Habit)}
@@ -84,10 +80,6 @@ func deleteHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		return
 	}
 
-	if habit.Users == nil {
-		habit.Users = make(map[int64]*habit.User)
-	}
-
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {
 		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добвыили ни одной привычки.")
@@ -116,9 +108,6 @@ func deleteHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 }
 
 func listHabitsCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
-	if habit.Users == nil {
-		habit.Users = make(map[int64]*habit.User)
-	}
 
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {
@@ -156,10 +145,6 @@ func markHabbitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 
 		bot.Send(msg)
 		return
-	}
-
-	if habit.Users == nil {
-		habit.Users = make(map[int64]*habit.User)
 	}
 
 	user, exists := habit.Users[inputMessage.Chat.ID]
@@ -206,10 +191,6 @@ func unmarkHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 		return
 	}
 
-	if habit.Users == nil {
-		habit.Users = make(map[int64]*habit.User)
-	}
-
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {
 		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Вы еще не добавили ни одной привычки.")
@@ -244,9 +225,6 @@ func unmarkHabitCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
 }
 
 func statsCommand(bot *tgbotapi.BotAPI, inputMessage *tgbotapi.Message) {
-	if habit.Users == nil {
-		habit.Users = make(map[int64]*habit.User)
-	}
 
 	user, exists := habit.Users[inputMessage.Chat.ID]
 	if !exists {

@@ -6,6 +6,7 @@ import (
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/joho/godotenv"
+	habit "github.com/k6zma/HabitTrackerBot/internal/model"
 	"github.com/k6zma/HabitTrackerBot/internal/utils"
 )
 
@@ -34,6 +35,10 @@ func Start() {
 	u.Timeout = 60
 
 	updates := bot.GetUpdatesChan(u)
+
+	if habit.Users == nil {
+		habit.Users = make(map[int64]*habit.User)
+	}
 
 	for update := range updates {
 		if update.Message != nil {
